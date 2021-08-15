@@ -1,2 +1,2 @@
-# Vue-Blog
-SpringBoot与Vue构建的个人博客
+# SpringBoot与Vue构建的个人博客
+
