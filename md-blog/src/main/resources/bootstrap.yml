@@ -1,0 +1,20 @@
+server:
+  port: 8096
+  servlet:
+    context-path: /mos
+
+spring:
+  profiles:
+    active: dev
+  application:
+    name: vue-blog
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        username: nacos
+        password: naocs
+      config:
+        server-addr: ${spring.cloud.nacos.discovery.server-addr}
+        file-extension: yaml #文件扩展名
+        group: VBLOG_GROUP

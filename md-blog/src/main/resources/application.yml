@@ -1,0 +1,35 @@
+#server:
+#  port: 8096
+#  servlet:
+#    context-path: /mos
+#
+#upload-path:
+#  user-img: /www/static/image/2018-8-8
+#  title-img: /www/static/image/2018-8-8
+#
+#spring:
+#  profiles:
+#    active: dev
+#  datasource:
+#    driverClassName: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://8.135.100.252:3306/vblog?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+#    username: root
+#    password: 3626356
+#  jackson:
+#    date-format: yyyy-MM-dd
+#    time-zone: Asia/Shanghai
+#
+#logging:
+#  level:
+#    com:
+#      cloud.mdblog:
+#        mapper: debug
+#      alibaba.nacos.client.security.*: OFF
+#      alibaba.nacos.client.config.impl: WARN
+#    io.swagger.models.parameters.*: OFF
+#
+#mybatis:
+#  type-aliases-package: com.cloud.mdblog.entity
+#  mapper-locations:  classpath:mapper/*.xml
+#pagehelper:
+#  helper-dialect: mysql
