@@ -16,7 +16,7 @@
 
 > 注意skitter是本人自改过的包，直接引用npm install的skitter包可能报错
 
-[需要包的话可以访问这里]()
+[需要包的话可以访问这里](https://github.com/AbrahamTemple/skitter)
 
 ### 后端：
 
