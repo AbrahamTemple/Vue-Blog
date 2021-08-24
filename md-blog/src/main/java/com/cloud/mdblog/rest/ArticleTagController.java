@@ -1,6 +1,8 @@
 package com.cloud.mdblog.rest;
 
 
+import com.cloud.mdblog.jwt.AccessAuth;
+import com.cloud.mdblog.service.ArticleTagService;
 import com.github.pagehelper.PageInfo;
 import com.cloud.mdblog.entity.ArticleTag;
 import com.cloud.mdblog.service.impl.ArticleTagServiceImpl;
@@ -17,21 +19,25 @@ import java.util.Map;
 @RestController
 @RequestMapping("/articleArticleTag")
 public class ArticleTagController {
-    @Autowired
-    private ArticleTagServiceImpl articleTagService;
 
+    @Autowired
+    private ArticleTagService articleTagService;
+
+    @AccessAuth
     @PostMapping("/create")
     public Result create(@RequestBody ArticleTag articleTag){
         articleTagService.create(articleTag);
         return Result.ok(articleTag);
     }
 
+    @AccessAuth
     @PostMapping("/delete")
     public Result delete(Integer id){
         articleTagService.delete(id);
         return Result.ok();
     }
 
+    @AccessAuth
     @PostMapping("/update")
     public Result update(@RequestBody ArticleTag articleTag){
         articleTagService.update(articleTag);
@@ -42,7 +48,6 @@ public class ArticleTagController {
         PageInfo<ArticleTag> pageInfo = articleTagService.query(articleTag);
         return Result.ok(pageInfo);
     }
-
 
 
     @PostMapping("/detail")

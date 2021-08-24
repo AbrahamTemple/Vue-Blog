@@ -1,10 +1,11 @@
 package com.cloud.mdblog.rest;
 
 
+import com.cloud.mdblog.jwt.AccessAuth;
+import com.cloud.mdblog.service.ChannelService;
 import com.github.pagehelper.PageInfo;
 import com.cloud.mdblog.entity.Channel;
 import com.cloud.mdblog.entity.User;
-import com.cloud.mdblog.service.impl.ChannelServiceImpl;
 import com.cloud.mdblog.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,8 +25,9 @@ import java.util.Map;
 public class ChannelController {
 
     @Autowired
-    private ChannelServiceImpl channelServiceImpl;
+    private ChannelService channelService;
 
+    @AccessAuth
     @PostMapping("/create")
     public Result create(@RequestBody Channel channel, HttpServletRequest request){
         User user = (User) request.getAttribute("user");
@@ -33,30 +35,33 @@ public class ChannelController {
         if (channel.getParentId()==null){
             channel.setParentId(0);
         }
-        channelServiceImpl.create(channel);
+        channelService.create(channel);
         return Result.ok(channel);
     }
 
+    @AccessAuth
     @PostMapping("/delete")
     public Result delete(Integer id){
-        channelServiceImpl.delete(id);
+        channelService.delete(id);
         return Result.ok();
     }
 
+    @AccessAuth
     @PostMapping("/update")
     public Result update(@RequestBody Channel channel){
-        channelServiceImpl.update(channel);
+        channelService.update(channel);
         return Result.ok(channel);
     }
+
     @PostMapping("/query")
     public Map query(@RequestBody Channel channel){
-        PageInfo<Channel> pageInfo = channelServiceImpl.query(channel);
+        PageInfo<Channel> pageInfo = channelService.query(channel);
         return Result.ok(pageInfo);
     }
 
     @PostMapping("/tree")
     public Result tree(){
-        List<Channel> list = channelServiceImpl.all();
+        List<Channel> list = channelService.all();
         List<Map<String,Object>> mapList=new ArrayList<>();
         for (Channel channel : list) {
             //首先获取顶级栏目
@@ -82,12 +87,12 @@ public class ChannelController {
 
     @PostMapping("/detail")
     public Result detail(Integer id){
-        Channel detail = channelServiceImpl.detail(id);
+        Channel detail = channelService.detail(id);
         return Result.ok(detail);
     }
     @PostMapping("/count")
     public Result count(@RequestBody Channel channel){
-        int count = channelServiceImpl.count(channel);
+        int count = channelService.count(channel);
         return Result.ok(count);
     }
 }

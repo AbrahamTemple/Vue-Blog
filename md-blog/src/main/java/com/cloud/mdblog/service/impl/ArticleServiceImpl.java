@@ -22,6 +22,7 @@ import java.util.Map;
 
 @Service
 public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> implements ArticleService {
+
     @Autowired
     private ArticleMapper articleMapper;
 
@@ -39,6 +40,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Autowired
     private CommentMapper commentMapper;
 
+    @Override
     @Transactional
     public int create(Article article){
         article.setArticleView(0);
@@ -60,6 +62,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         return row;
     }
 
+    @Override
     public int delete(Integer id){
         int delete = articleMapper.delete(Maps.build(id).getMap());
         articleAttachmentMapper.delete(Maps.build().put("articleId",id).getMap());
@@ -68,6 +71,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         return delete;
     }
 
+    @Override
     public int update(Article article){
         int update = articleMapper.update(Maps.build(article.getId()).beanToMapForUpdate(article));
         articleAttachmentMapper.delete(Maps.build().put("articleId",article.getId()).getMap());
@@ -88,6 +92,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         return update;
     }
 
+    @Override
     public PageInfo<Article> query(Article article){
         if (article!=null && article.getPage() != null){
             PageHelper.startPage(article.getPage(),article.getLimit());
@@ -107,11 +112,12 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         return new PageInfo<> (list);
     }
 
+    @Override
     public List<Article> orderBy(){
         return  articleMapper.olderBy(Maps.build().beanToMap(null));
     }
 
-
+    @Override
     public List<Article> getChannelPos(Integer id){
         Article article = new Article();
         article.setChannelId(id);
@@ -127,6 +133,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         return list;
     }
 
+    @Override
     public PageInfo<Article> getPage(Article article,Integer number){
         if (number!=null){
             PageHelper.startPage(number,8);
@@ -145,16 +152,19 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         return new PageInfo<> (list);
     }
 
+    @Override
     public List<Article> getRandomArticle(){
         return articleMapper.getRandomArticle();
     }
 
+    @Override
     public List<Article> top(Article article,Integer top){
         PageHelper.startPage(0,top);
         List<Article> list = articleMapper.query(Maps.build().beanToMap(article));
         return list;
     }
 
+    @Override
     public List<Article> top(){
         Article article = new Article();
         article.setTop(1);
@@ -172,7 +182,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         return list;
     }
 
-
+    @Override
     public Article detail(Article a){
         Integer id=a.getId();
         Article article = articleMapper.detail(Maps.build(id).getMap());
@@ -235,13 +245,12 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         return article;
     }
 
-
+    @Override
     public List<Article> getNotice(Article article){
         return articleMapper.getNotice(Maps.build().beanToMap(article));
     }
 
-
-
+    @Override
     public int count(Article article){
         return articleMapper.count(Maps.build().beanToMap(article));
     }

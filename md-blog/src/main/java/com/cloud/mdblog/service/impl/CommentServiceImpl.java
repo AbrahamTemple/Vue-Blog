@@ -19,23 +19,23 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     @Autowired
     private CommentMapper commentMapper;
 
-
+    @Override
     public int create(Comment comment){
         comment.setStatus(1);
         return commentMapper.create(comment);
     }
 
+    @Override
     public int delete(Integer id){
         return commentMapper.delete(Maps.build(id).getMap());
     }
 
+    @Override
     public int update(Comment comment){
-        System.out.println(comment);
-
-        System.out.println(Maps.build().beanToMap(comment));
         return commentMapper.update(Maps.build(comment.getId()).beanToMapForUpdate(comment));
     }
 
+    @Override
     public PageInfo<Comment> query(Comment comment){
         if (comment!=null && comment.getPage() != null){
             PageHelper.startPage(comment.getPage(),comment.getLimit());
@@ -52,17 +52,18 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         return new PageInfo<> (list);
     }
 
+    @Override
     public List<Comment> getCommentArticle(Comment comment){
         List<Comment> list = commentMapper.query(Maps.build().beanToMap(comment));
         return list;
     }
 
-
-
+    @Override
     public Comment detail(Integer id){
         return commentMapper.detail(Maps.build(id).getMap());
     }
 
+    @Override
     public int count(Comment comment){
         return commentMapper.count(Maps.build().beanToMap(comment));
     }

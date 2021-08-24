@@ -24,6 +24,7 @@
         <oracle.version>11.2.0.3</oracle.version>
         <mybatis.version>3.3.1.tmp</mybatis.version>
         <nacos-config.version>2.2.1.RELEASE</nacos-config.version>
+        <jwt.version>3.4.1</jwt.version>
     </properties>
 
     <dependencies>
@@ -36,6 +37,11 @@
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
             <version>${nacos-config.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>${jwt.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -77,18 +83,6 @@
             <groupId>org.apache.velocity</groupId>
             <artifactId>velocity-engine-core</artifactId>
             <version>2.2</version>
-        </dependency>
-
-        <!--Swagger-->
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>2.9.2</version>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>2.9.2</version>
         </dependency>
 
         <dependency>

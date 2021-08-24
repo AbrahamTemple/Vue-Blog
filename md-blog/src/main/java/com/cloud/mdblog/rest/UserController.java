@@ -1,18 +1,19 @@
 package com.cloud.mdblog.rest;
 
 
+import com.cloud.mdblog.jwt.AccessAuth;
+import com.cloud.mdblog.service.UserService;
 import com.github.pagehelper.PageInfo;
 import com.cloud.mdblog.entity.User;
-import com.cloud.mdblog.service.impl.UserServiceImpl;
 import com.cloud.mdblog.utils.RequestUtils;
 import com.cloud.mdblog.utils.Result;
-import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
@@ -23,54 +24,54 @@ import java.util.UUID;
 public class UserController {
 
     @Autowired
-    private UserServiceImpl userServiceImpl;
+    private UserService userService;
 
     @Value("${upload-path.user-img}")
     private String paths;
 
-    @ApiOperation("用户创建")
+    @AccessAuth
     @PostMapping("/create")
     public Result  create(@RequestBody User user){
-        userServiceImpl.create(user);
+        userService.create(user);
         return Result.ok(user);
     }
 
-    @ApiOperation("用户删除")
+    @AccessAuth
     @PostMapping("/delete")
     public Result delete(Integer id){
-        userServiceImpl.delete(id);
+        userService.delete(id);
         return Result.ok();
     }
 
-    @ApiOperation("用户更新")
+    @AccessAuth
     @PostMapping("/update")
     public Result update(@RequestBody User user){
-        userServiceImpl.update(user);
+        userService.update(user);
         return Result.ok(user);
     }
 
-    @ApiOperation("账号状态")
+
     @PostMapping("/query")
     public Map query(@RequestBody User user){
-        PageInfo<User> pageInfo = userServiceImpl.query(user);
+        PageInfo<User> pageInfo = userService.query(user);
         System.out.println(pageInfo.getList());
         return Result.ok(pageInfo);
     }
 
+    @AccessAuth
     @PostMapping("/detail")
     public Result detail(Integer id){
-        User detail = userServiceImpl.detail(id);
+        User detail = userService.detail(id);
         return Result.ok(detail);
     }
 
-    @ApiOperation("用户数量")
     @PostMapping("/count")
     public Result count(@RequestBody User user){
-        int count = userServiceImpl.count(user);
+        int count = userService.count(user);
         return Result.ok(count);
     }
 
-    @ApiOperation("用户图片上传")
+    @AccessAuth
     @PostMapping("/upload")
     public Result upload(@RequestParam MultipartFile file, HttpServletRequest request) throws IOException {
         String originalFilename = file.getOriginalFilename();

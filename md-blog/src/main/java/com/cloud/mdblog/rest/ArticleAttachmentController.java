@@ -1,6 +1,8 @@
 package com.cloud.mdblog.rest;
 
 
+import com.cloud.mdblog.jwt.AccessAuth;
+import com.cloud.mdblog.service.ArticleAttachmentService;
 import com.github.pagehelper.PageInfo;
 import com.cloud.mdblog.entity.ArticleAttachment;
 import com.cloud.mdblog.service.impl.ArticleAttachmentServiceImpl;
@@ -18,20 +20,23 @@ import java.util.Map;
 @RequestMapping("/article-attachment")
 public class ArticleAttachmentController {
     @Autowired
-    private ArticleAttachmentServiceImpl articleAttachmentService;
+    private ArticleAttachmentService articleAttachmentService;
 
+    @AccessAuth
     @PostMapping("/create")
     public Result create(@RequestBody ArticleAttachment articleAttachmen){
         articleAttachmentService.create(articleAttachmen);
         return Result.ok(articleAttachmen);
     }
 
+    @AccessAuth
     @PostMapping("/delete")
     public Result delete(Integer id){
         articleAttachmentService.delete(id);
         return Result.ok();
     }
 
+    @AccessAuth
     @PostMapping("/update")
     public Result update(@RequestBody ArticleAttachment articleAttachmen){
 

@@ -1,9 +1,10 @@
 package com.cloud.mdblog.rest;
 
 
+import com.cloud.mdblog.jwt.AccessAuth;
+import com.cloud.mdblog.service.CommentService;
 import com.github.pagehelper.PageInfo;
 import com.cloud.mdblog.entity.Comment;
-import com.cloud.mdblog.service.impl.CommentServiceImpl;
 import com.cloud.mdblog.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,22 +17,24 @@ import java.util.Map;
 public class CommentController {
 
     @Autowired
-    private CommentServiceImpl commentServiceImpl;
+    private CommentService commentService;
 
+    @AccessAuth
     @PostMapping("/delete")
     public Result delete(Integer id){
-        commentServiceImpl.delete(id);
+        commentService.delete(id);
         return Result.ok();
     }
 
+    @AccessAuth
     @PostMapping("/update")
     public Result update(@RequestBody Comment comment){
-        commentServiceImpl.update(comment);
+        commentService.update(comment);
         return Result.ok(comment);
     }
     @PostMapping("/query")
     public Map query(@RequestBody Comment comment){
-        PageInfo<Comment> pageInfo = commentServiceImpl.query(comment);
+        PageInfo<Comment> pageInfo = commentService.query(comment);
         System.out.println(pageInfo.getList());
         return Result.ok(pageInfo);
     }
@@ -39,13 +42,13 @@ public class CommentController {
 
     @PostMapping("/detail")
     public Result detail(Integer id){
-        Comment detail = commentServiceImpl.detail(id);
+        Comment detail = commentService.detail(id);
         return Result.ok(detail);
     }
 
     @PostMapping("/count")
     public Result count(@RequestBody Comment comment){
-        int count = commentServiceImpl.count(comment);
+        int count = commentService.count(comment);
         return Result.ok(count);
     }
 
@@ -57,7 +60,7 @@ public class CommentController {
     public Map getStatusComment(Comment comment){
         System.out.println("评论的内容"+comment);
         comment.setStatus(1);
-        PageInfo<Comment> pageInfo = commentServiceImpl.query(comment);
+        PageInfo<Comment> pageInfo = commentService.query(comment);
         System.out.println(pageInfo.getList());
         return Result.ok(pageInfo);
     }
@@ -69,7 +72,7 @@ public class CommentController {
         System.out.println("评论的内容"+pageId);
         comment.setStatus(1);
         comment.setPage(pageId);
-        PageInfo<Comment> pageInfo = commentServiceImpl.query(comment);
+        PageInfo<Comment> pageInfo = commentService.query(comment);
         System.out.println(pageInfo.getList());
         return Result.ok(pageInfo);
     }
@@ -77,12 +80,13 @@ public class CommentController {
     /**
      * 审核通过
      */
+    @AccessAuth
     @GetMapping("/getUpdateStatus")
     public Result getUpdateStatus(Integer commentId){
         Comment comment = new Comment();
         comment.setId(commentId);
         comment.setStatus(0);
-        commentServiceImpl.update(comment);
+        commentService.update(comment);
         return Result.ok();
     }
 

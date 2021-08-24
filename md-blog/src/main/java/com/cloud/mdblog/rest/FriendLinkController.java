@@ -1,6 +1,8 @@
 package com.cloud.mdblog.rest;
 
 
+import com.cloud.mdblog.jwt.AccessAuth;
+import com.cloud.mdblog.service.FriendLinkService;
 import com.github.pagehelper.PageInfo;
 import com.cloud.mdblog.entity.FriendLink;
 import com.cloud.mdblog.service.impl.FriendLinkServiceImpl;
@@ -17,20 +19,23 @@ import java.util.Map;
 public class FriendLinkController {
 
     @Autowired
-    private FriendLinkServiceImpl friendLinkService;
+    private FriendLinkService friendLinkService;
 
+    @AccessAuth
     @PostMapping("/create")
     public Result create(@RequestBody FriendLink friendLink){
         friendLinkService.create(friendLink);
         return Result.ok(friendLink);
     }
 
+    @AccessAuth
     @PostMapping("/delete")
     public Result delete(Integer id){
         friendLinkService.delete(id);
         return Result.ok();
     }
 
+    @AccessAuth
     @PostMapping("/update")
     public Result update(@RequestBody FriendLink friendLink){
 

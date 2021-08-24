@@ -1,8 +1,9 @@
 package com.cloud.mdblog.rest;
 
+import com.cloud.mdblog.jwt.AccessAuth;
+import com.cloud.mdblog.service.TagService;
 import com.github.pagehelper.PageInfo;
 import com.cloud.mdblog.entity.Tag;
-import com.cloud.mdblog.service.impl.TagServiceImpl;
 import com.cloud.mdblog.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,31 +18,35 @@ import java.util.Map;
 public class TagController {
 
     @Autowired
-    private TagServiceImpl tagServiceImpl;
+    private TagService tagService;
 
+    @AccessAuth
     @PostMapping("/create")
     public Result create(@RequestBody Tag tag){
-        tagServiceImpl.create(tag);
+        tagService.create(tag);
         return Result.ok(tag);
     }
 
+    @AccessAuth
     @PostMapping("/delete")
     public Result delete(Integer id){
-        tagServiceImpl.delete(id);
+        tagService.delete(id);
         return Result.ok();
     }
 
+    @AccessAuth
     @PostMapping("/update")
     public Result update(@RequestBody Tag tag){
 
         System.out.println("我是update");
         System.out.println("tag====>"+tag);
-        tagServiceImpl.update(tag);
+        tagService.update(tag);
         return Result.ok(tag);
     }
+
     @PostMapping("/query")
     public Map query(@RequestBody Tag tag){
-        PageInfo<Tag> pageInfo = tagServiceImpl.query(tag);
+        PageInfo<Tag> pageInfo = tagService.query(tag);
         System.out.println(pageInfo.getList());
         return Result.ok(pageInfo);
     }
@@ -55,13 +60,13 @@ public class TagController {
 
     @PostMapping("/detail")
     public Result detail(Integer id){
-        Tag detail = tagServiceImpl.detail(id);
+        Tag detail = tagService.detail(id);
         return Result.ok(detail);
     }
 
     @PostMapping("/count")
     public Result count(@RequestBody Tag tag){
-        int count = tagServiceImpl.count(tag);
+        int count = tagService.count(tag);
         return Result.ok(count);
     }
 }

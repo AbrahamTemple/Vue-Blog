@@ -23,17 +23,20 @@ public class ChannelServiceImpl extends ServiceImpl<ChannelMapper, Channel> impl
     @Autowired
     private UserServiceImpl userService;
 
-
+    @Override
     public int create(Channel channel){
         return channelMapper.create(channel);
     }
 
+    @Override
     public int delete(Integer id){
         return channelMapper.delete(Maps.build(id).getMap());
     }
 
+    @Override
     public int update(Channel channel){ return channelMapper.update(Maps.build(channel.getId()).beanToMapForUpdate(channel)); }
 
+    @Override
     public PageInfo<Channel> query(Channel channel){
         if (channel!=null && channel.getPage() != null){
             PageHelper.startPage(channel.getPage(),channel.getLimit());
@@ -71,7 +74,7 @@ public class ChannelServiceImpl extends ServiceImpl<ChannelMapper, Channel> impl
         return new PageInfo<> (list);
     }
 
-
+    @Override
     public PageInfo<Channel> NoByQuery(Channel channel){
         if (channel!=null && channel.getPage() != null){
             PageHelper.startPage(channel.getPage(),4);
@@ -88,18 +91,22 @@ public class ChannelServiceImpl extends ServiceImpl<ChannelMapper, Channel> impl
         return new PageInfo<> (list);
     }
 
+    @Override
     public List<Channel> getChannelPos(String  pos){
         return channelMapper.query(Maps.build().put("pos", pos).getMap());
     }
 
+    @Override
     public List<Channel> all(){
         return channelMapper.query(Maps.build().getMap());
     }
 
+    @Override
     public Channel detail(Integer id){
         return channelMapper.detail(Maps.build(id).getMap());
     }
 
+    @Override
     public int count(Channel channel){
         return channelMapper.count(Maps.build().beanToMap(channel));
     }

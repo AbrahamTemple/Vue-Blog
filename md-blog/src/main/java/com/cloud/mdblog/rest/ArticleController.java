@@ -2,9 +2,10 @@ package com.cloud.mdblog.rest;
 
 
 import cn.hutool.http.HtmlUtil;
+import com.cloud.mdblog.jwt.AccessAuth;
+import com.cloud.mdblog.service.ArticleService;
 import com.github.pagehelper.PageInfo;
 import com.cloud.mdblog.entity.Article;
-import com.cloud.mdblog.service.impl.ArticleServiceImpl;
 import com.cloud.mdblog.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -21,9 +22,11 @@ import java.util.regex.Pattern;
 @RestController
 @RequestMapping("/article")
 public class ArticleController {
-    @Autowired
-    private ArticleServiceImpl articleServiceImpl;
 
+    @Autowired
+    private ArticleService articleService;
+
+    @AccessAuth
     @PostMapping("/create")
     public Result create(@RequestBody Article article){
 
@@ -47,27 +50,31 @@ public class ArticleController {
             }
 
         }
-        articleServiceImpl.create(article);
+        articleService.create(article);
 
         return Result.ok(article);
     }
 
+    @AccessAuth
     @PostMapping("/delete")
     public Result delete(Integer id){
-        articleServiceImpl.delete(id);
+        articleService.delete(id);
         return Result.ok();
     }
 
+    @AccessAuth
     @PostMapping("/update")
     public Result update(@RequestBody Article article){
         System.out.println("我是update");
         System.out.println("article====>"+article);
-        articleServiceImpl.update(article);
+        articleService.update(article);
         return Result.ok(article);
     }
+
+
     @PostMapping("/query")
     public Map query(@RequestBody Article article){
-        PageInfo<Article> pageInfo = articleServiceImpl.query(article);
+        PageInfo<Article> pageInfo = articleService.query(article);
         System.out.println(pageInfo.getList());
         return Result.ok(pageInfo);
     }
@@ -77,13 +84,13 @@ public class ArticleController {
         Article article = new Article();
         article.setId(id);
         article.setFront(false);
-        Article detail = articleServiceImpl.detail(article);
+        Article detail = articleService.detail(article);
         return Result.ok(detail);
     }
 
     @PostMapping("/count")
     public Result count(@RequestBody Article article){
-        int count = articleServiceImpl.count(article);
+        int count = articleService.count(article);
         return Result.ok(count);
     }
 

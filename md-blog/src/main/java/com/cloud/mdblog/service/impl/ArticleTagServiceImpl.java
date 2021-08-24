@@ -34,19 +34,22 @@ public class ArticleTagServiceImpl extends ServiceImpl<ArticleTagMapper, Article
     @Autowired
     private ChannelMapper channelMapper;
 
-
+    @Override
     public int create(ArticleTag articleTag){
         return articleTagMapper.create(articleTag);
     }
 
+    @Override
     public int delete(Integer id){
         return articleTagMapper.delete(Maps.build(id).getMap());
     }
 
+    @Override
     public int update(ArticleTag articleTag){
         return articleTagMapper.update(Maps.build(articleTag.getId()).beanToMapForUpdate(articleTag));
     }
 
+    @Override
     public PageInfo<ArticleTag> query(ArticleTag articleTag){
         if (articleTag!=null && articleTag.getPage() != null){
             PageHelper.startPage(articleTag.getPage(),articleTag.getLimit());
@@ -55,6 +58,7 @@ public class ArticleTagServiceImpl extends ServiceImpl<ArticleTagMapper, Article
         return new PageInfo<> (list);
     }
 
+    @Override
     public PageInfo<ArticleTag> getArticleId(ArticleTag articleTag){
         if (articleTag!=null && articleTag.getPage() != null){
             PageHelper.startPage(articleTag.getPage(),8);
@@ -76,10 +80,12 @@ public class ArticleTagServiceImpl extends ServiceImpl<ArticleTagMapper, Article
         return new PageInfo<> (list);
     }
 
+    @Override
     public ArticleTag detail(Integer id){
         return articleTagMapper.detail(Maps.build(id).getMap());
     }
 
+    @Override
     public int count(ArticleTag articleTag){
         return articleTagMapper.count(Maps.build().beanToMap(articleTag));
     }

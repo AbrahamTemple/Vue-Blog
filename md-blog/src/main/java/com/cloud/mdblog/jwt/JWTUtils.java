@@ -6,6 +6,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 
 import java.util.Date;
@@ -16,12 +17,13 @@ import java.util.UUID;
 /**
  * jwt工具类
  */
+@Slf4j
 public class JWTUtils {
 
     public static String token="token";
 
     //密钥
-    public static String jwt_secret="yanzhen@zhaoguoshun@shun08474450.";
+    public static String jwt_secret="https://github.com/AbrahamTemplate/Vue-Blog/md-blog.git";
     //过期时间
     public static  long  jwt_expr= 3600*24*1000 ;
     //1、生成token
@@ -56,12 +58,13 @@ public class JWTUtils {
 
         try {
             if (StringUtils.isEmpty(token)){
+                log.info("---缺少token---");
                 return false;
             }
             Jwts.parser().setSigningKey(jwt_secret).parseClaimsJws(token).getBody();
             return true;
         } catch (Exception e){
-            e.printStackTrace();
+            log.info("---无效token---");
             return false;
         }
     }
@@ -84,17 +87,8 @@ public class JWTUtils {
             }
         } catch (Exception e) {
             e.printStackTrace();
-
             throw new MyException("请您先登录再试,没有找到token");
         }
     }
 
-
-    public static void main(String[] args) {
-        User user = new User();
-        user.setId(1);
-        user.setUserName("zhaoguoshun");
-
-        System.out.println(sign(user));
-    }
 }

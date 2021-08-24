@@ -33,11 +33,6 @@ public class MyMvcConfigurer implements WebMvcConfigurer {
         registry.addResourceHandler("/upload/**").addResourceLocations("file:/Users/admin/Documents/workspace/idea-project/Lyu-blog/cms/");// 这里要写你的文件存储的路径
         //registry.addResourceHandler("/upload/**").addResourceLocations("file:d:/upload/cms/");// 这里要写你的文件存储的路径
         registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
-        /*swagger*/
-        registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
-        registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
-        registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
-        registry.addResourceHandler("/v2/**").addResourceLocations("classpath:/META-INF/resources/v2/");
     }
 
     /**

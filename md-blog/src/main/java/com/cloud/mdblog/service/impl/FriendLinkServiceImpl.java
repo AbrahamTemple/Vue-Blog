@@ -19,22 +19,22 @@ public class FriendLinkServiceImpl extends ServiceImpl<FriendLinkMapper, FriendL
     @Autowired
     private FriendLinkMapper friendLinkMapper;
 
-
+    @Override
     public int create(FriendLink friendLink){
         return friendLinkMapper.create(friendLink);
     }
 
+    @Override
     public int delete(Integer id){
         return friendLinkMapper.delete(Maps.build(id).getMap());
     }
 
+    @Override
     public int update(FriendLink friendLink){
-        System.out.println(friendLink);
-
-        System.out.println(Maps.build().beanToMap(friendLink));
         return friendLinkMapper.update(Maps.build(friendLink.getId()).beanToMapForUpdate(friendLink));
     }
 
+    @Override
     public PageInfo<FriendLink> query(FriendLink friendLink){
         if (friendLink!=null && friendLink.getPage() != null){
             PageHelper.startPage(friendLink.getPage(),friendLink.getLimit());
@@ -43,17 +43,18 @@ public class FriendLinkServiceImpl extends ServiceImpl<FriendLinkMapper, FriendL
         return new PageInfo<FriendLink> (list);
     }
 
-
+    @Override
     public List<FriendLink> getFriendLink(FriendLink friendLink){
         List<FriendLink> list = friendLinkMapper.query(Maps.build().beanToMap(friendLink));
         return  list;
     }
 
-
+    @Override
     public FriendLink detail(Integer id){
         return friendLinkMapper.detail(Maps.build(id).getMap());
     }
 
+    @Override
     public int count(FriendLink friendLink){
         return friendLinkMapper.count(Maps.build().beanToMap(friendLink));
     }
