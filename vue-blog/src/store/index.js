@@ -22,7 +22,7 @@ const store = new Vuex.Store({
     actions:{
         login({commit},user){
             return new Promise((resolve,reject)=>{
-                login(user.userName,user.password).then(data=>{
+                login(user.username,user.password,user.code).then(data=>{
                     commit('setToken',data.data.token)
                     token.setUser(data.data.user)
                     //处理token 写入vuex状态管理

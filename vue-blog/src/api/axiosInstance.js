@@ -1,8 +1,9 @@
 import axios from 'axios'
 import store from '../store'
 import token from '../store/token'
-const axiosIstance=axios.create({
-    baseURL: 'http://8.135.100.252:8096/mos/',
+
+const axiosIstance = axios.create({
+    baseURL: 'http://127.0.0.1:8096/mos/',
     timeout: 100000,
 });
 
@@ -42,4 +43,5 @@ axiosIstance.interceptors.response.use(response =>{
     return Promise.reject(error);
 });
 
+axios.defaults.withCredentials=true
 export default axiosIstance

@@ -1,9 +1,10 @@
 import axiosInstall from './axiosInstance';
 
-export function login(userName, password) {
+export function login(username, password, code) {
     return axiosInstall.post('login',{
-        userName: userName,
-        password:password
+        username: username,
+        password:password,
+        code: code
     })
 }
 

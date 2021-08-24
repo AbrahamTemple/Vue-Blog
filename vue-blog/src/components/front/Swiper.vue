@@ -47,7 +47,15 @@
             }
         },
         mounted() {
-            $('.box_skitter_large').skitter({label: true,dots : false,numbers: false, interval:3500,theme: 'square'});
+            $('.box_skitter_large').skitter({
+                    label: true,
+                    dots : false,
+                    // numbers: true,
+                    interval:3500,
+                    show_randomly: true,
+                    hideTools: true,
+                    theme: 'minimalist'
+            });
         },
     }
 </script>

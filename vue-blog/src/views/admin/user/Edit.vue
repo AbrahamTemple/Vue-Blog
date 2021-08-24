@@ -77,13 +77,18 @@
                 this.$refs['formData'].validate(valid=>{
                     if (valid) {
                         this.loading=true
+                        switch (this.formData.status) {
+                            case "正常": this.formData.status = 'T';break;
+                            case "禁用": this.formData.status = 'F';break;
+                            case "删除": this.formData.status = 'D';break;
+                        }
                         update(this.formData).then(data=>{
-                            this.loading=false
-                            this.$refs['formData'].resetFields()
-                            this.$emit("after")
+                            this.loading=false;
+                            this.$refs['formData'].resetFields();
+                            this.$emit("after");
                             this.$emit("hideDialog")
                         }).catch(error=>{
-                            this.loading=true
+                            this.loading=true;
                             this.$message.error(error)
                         })
                     }

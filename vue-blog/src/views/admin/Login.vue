@@ -5,11 +5,16 @@
             <h2 style="opacity: 1;font-weight: 300"> 博客后台登录</h2>
             <el-form ref="form" :model="form" :rules="rules" label-width="80px">
                <el-form-item prop="userName">
-                     <el-input placeholder="请输入用户名" v-model="form.userName"></el-input>
+                     <el-input placeholder="请输入用户名" v-model="form.username"></el-input>
                 </el-form-item>
 
                 <el-form-item  prop="password">
                     <el-input placeholder="请输入登录密码" type="password" v-model="form.password"></el-input>
+                </el-form-item>
+
+                <el-form-item  prop="code">
+                    <el-input placeholder="请输入验证码" v-model="form.code" class="code-input"></el-input>
+                    <img :src="imgCode" @click="refresh" class="code-box" ref="imgCode"/>
                 </el-form-item>
 
                 <el-form-item>
@@ -18,7 +23,7 @@
             </el-form>
         </div>
     </div>
-    
+
 </template>
 
 <script>
@@ -26,22 +31,29 @@
         name: "Login",
         data(){
             return{
+                imgCode: '',
                 form:{
                     userName:'',
-                    password:''
+                    password:'',
+                    code:''
                 },
                 loading :false,
                 rules:{
-                    userName:[{required:true,message:'请输入用户名'}],
+                    username:[{required:true,message:'请输入用户名'}],
                     password:[{required:true,message:'请输入登录密码'}],
+                    code:[{required:true,message:'请输入验证码'}],
                 }
             }
         },
         methods:{
+            refresh(){
+                this.imgCode = 'http://8.135.100.252:8096/mos/front/check/code?time=' + Date.now();
+            },
             submit(){
                 this.$refs['form'].validate(valid=>{
                     if (valid){
                        this.loading= true
+                        console.log(this.form)
                         this.$store.dispatch('login',this.form).then(()=>{
                             this.$router.push('/user')
                         }).catch(error=>{
@@ -52,6 +64,9 @@
                     }
                 })
             }
+        },
+        mounted() {
+            this.imgCode = 'http://8.135.100.252:8096/mos/front/check/code?time=' + Date.now()
         }
     }
 </script>
@@ -70,7 +85,7 @@
         right: 30%;
         bottom: 25%;
 
-        height: 300px;
+        height: 350px;
         /*background-color: #ffffff;*/
         background-color: rgba(0,0,0,0.4);
         border-radius:5px;
@@ -86,5 +101,17 @@
 
     .login-page-bg h2{
         margin-bottom: 30px;
+    }
+
+    .code-input{
+        width: 72.5%;
+        float: left;
+    }
+
+    .code-box{
+        width: 22.5%;
+        margin-left: 5%;
+        border-radius:5px;
+        float: left;
     }
 </style>
